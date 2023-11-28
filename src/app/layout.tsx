@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Navbar } from './components/navbar'
+import { Footer } from './components/footer'
 
 export const metadata: Metadata = {
-  title: 'Restart',
+  title: 'Restart.',
   description: 'Is it easy building a business?',
 }
 
@@ -15,8 +14,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
+      <body style={{margin: '0px'}}>
+        <div style={{display: 'flex', flexFlow: 'column', justifyContent: 'space-between', height: '100vh', width: '100vw', alignItems: 'stretch'}}>
+          <div style={{flexGrow: 1}}>
+            <Navbar />
+          </div>
+          <div style={{flexGrow: 10}}>{children}</div>
+          <div style={{flexGrow: 1}}>
+            <Footer></Footer>
+          </div>
+        </div>
       </body>
     </html>
   )
