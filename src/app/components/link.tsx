@@ -1,8 +1,6 @@
-import NextLink from "next/link"
-import { Link } from "@fluentui/react-components"
+import NextLink from "next/link";
+import { Link } from "@fluentui/react-components";
 
-const CustomLink = () => {
-    
-}
+const CustomLink = () => {};
 
-export {CustomLink}
+export { CustomLink };
