@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Economy Simulator
 
-## Getting Started
+Can we simulate macroeconomic factors using microeconomy of individual ventures?
 
-First, run the development server:
+If AI is too smart now, can it do this?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Development Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Fork and Clone the repository locally.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install `Node.js v20`, preferable using Node Version Manager (`nvm`). After installing `nvm`, you can run `nvm install --lts`. Execute `nvm use --lts` to switch to the correct version.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Run `npm i` to install all the required dependencies.
 
-## Learn More
+1. Run `npm run dev`. Once the server starts, open localhost with the correct port in the browser. Most probably, it would be `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing Guidelines
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Raise PRs only to the `main` branch.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. There is a pre-commit hook for `prettier`. Please honor it, and report a bug if it does not execute automatically.
