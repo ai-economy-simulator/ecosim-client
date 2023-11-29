@@ -15,12 +15,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{margin: '0px'}}>
-        <div style={{display: 'flex', flexFlow: 'column', justifyContent: 'space-between', height: '100vh', width: '100vw', alignItems: 'stretch'}}>
-          <div style={{flexGrow: 1}}>
+        <div style={{display: 'flex', flexFlow: 'column', justifyContent: 'space-between', height: '100vh', width: '100vw'}}>
+          <div>
             <Navbar />
           </div>
-          <div style={{flexGrow: 10}}>{children}</div>
-          <div style={{flexGrow: 1}}>
+          <div>{children}</div>
+          <div>
             <Footer></Footer>
           </div>
         </div>
