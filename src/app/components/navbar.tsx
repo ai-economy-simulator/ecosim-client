@@ -40,7 +40,12 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-            <Avatar name="Flip Trail" color="colorful" size={36}></Avatar>
+            <Avatar
+              name="Flip Trail"
+              color="colorful"
+              size={36}
+              style={{ marginRight: "1rem" }}
+            ></Avatar>
           </div>
         </div>
       </FluentProvider>
