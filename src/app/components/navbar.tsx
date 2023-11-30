@@ -1,12 +1,20 @@
 "use client";
 
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styles from "../page.module.css";
+import { SignOut20Regular } from "@fluentui/react-icons";
 import {
   Avatar,
   Button,
   FluentProvider,
   Image,
   LargeTitle,
+  Link,
+  Menu,
+  MenuItemLink,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
   Text,
   Title1,
   Title2,
@@ -14,6 +22,8 @@ import {
 } from "@fluentui/react-components";
 
 const Navbar = () => {
+  const { user, error } = useUser();
+
   return (
     <>
       <FluentProvider theme={teamsLightTheme}>
@@ -39,9 +49,40 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div>
-            <Avatar name="Flip Trail" color="colorful" size={36}></Avatar>
-          </div>
+          {user ? (
+            <div>
+              <Menu>
+                <MenuTrigger disableButtonEnhancement>
+                  <Button
+                    appearance="transparent"
+                    size="large"
+                    icon={
+                      <Avatar
+                        name={user.name ? user.name : "Name NA"}
+                        color="colorful"
+                        size={36}
+                        image={{ src: user.picture ? user.picture : "" }}
+                      />
+                    }
+                  ></Button>
+                </MenuTrigger>
+                <MenuPopover>
+                  <MenuList>
+                    <MenuItemLink
+                      href="/api/auth/logout"
+                      icon={<SignOut20Regular />}
+                    >
+                      Logout
+                    </MenuItemLink>
+                  </MenuList>
+                </MenuPopover>
+              </Menu>
+            </div>
+          ) : (
+            <Link href="/api/auth/login">
+              <Button appearance="subtle">Login</Button>
+            </Link>
+          )}
         </div>
       </FluentProvider>
     </>
