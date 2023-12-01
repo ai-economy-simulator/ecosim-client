@@ -19,3 +19,5 @@ If AI is too smart now, can it do this?
 1. Raise PRs only to the `main` branch.
 
 1. There is a pre-commit hook for `prettier`. Please honor it, and report a bug if it does not execute automatically.
+
+1. Resolve all merge conflicts unless states otherwise.
