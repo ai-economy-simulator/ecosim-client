@@ -1,0 +1,3 @@
+interface NewGameCodeGET {
+  gameCode: string;
+}

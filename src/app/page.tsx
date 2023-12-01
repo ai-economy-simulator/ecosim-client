@@ -18,6 +18,7 @@ import {
   teamsLightTheme,
 } from "@fluentui/react-components";
 import { useState } from "react";
+import NextLink from "next/link";
 
 export default function Home() {
   const [gameToJoinCode, setGameToJoinCode] = useState("");
@@ -51,13 +52,15 @@ export default function Home() {
                     style={{ flexFlow: "row wrap" }}
                   >
                     <div className={styles.flexitemmargin}>
-                      <Button
-                        appearance="primary"
-                        size="large"
-                        icon={<BrainCircuit24Filled />}
-                      >
-                        New Game
-                      </Button>
+                      <NextLink href="/game">
+                        <Button
+                          appearance="primary"
+                          size="large"
+                          icon={<BrainCircuit24Filled />}
+                        >
+                          New Game
+                        </Button>
+                      </NextLink>
                     </div>
                     <div
                       className={styles.flexitemmargin}
