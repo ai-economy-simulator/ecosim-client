@@ -40,7 +40,14 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-            <Avatar name="Flip Trail" color="colorful" size={36}></Avatar>
+            <div
+              className={styles.flexcontainer}
+              style={{ marginRight: "8px", flexFlow: "row", height: "48px" }}
+            >
+              <div className={styles.flexitemmargin} style={{ height: "48px" }}>
+                <Avatar name="Flip Trail" color="colorful" size={36}></Avatar>
+              </div>
+            </div>
           </div>
         </div>
       </FluentProvider>
