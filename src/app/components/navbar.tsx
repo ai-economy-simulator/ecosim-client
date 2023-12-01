@@ -40,14 +40,38 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-            <div
-              className={styles.flexcontainer}
-              style={{ marginRight: "8px", flexFlow: "row", height: "48px" }}
-            >
-              <div className={styles.flexitemmargin} style={{ height: "48px" }}>
-                <Avatar name="Flip Trail" color="colorful" size={36}></Avatar>
-              </div>
-            </div>
+            {user ? (
+              <Menu>
+                <MenuTrigger disableButtonEnhancement>
+                  <Button
+                    appearance="transparent"
+                    size="large"
+                    icon={
+                      <Avatar
+                        name={user.name ? user.name : "Name NA"}
+                        color="colorful"
+                        size={36}
+                        image={{ src: user.picture ? user.picture : "" }}
+                      />
+                    }
+                  ></Button>
+                </MenuTrigger>
+                <MenuPopover>
+                  <MenuList>
+                    <MenuItemLink
+                      href="/api/auth/logout"
+                      icon={<SignOut20Regular />}
+                    >
+                      Logout
+                    </MenuItemLink>
+                  </MenuList>
+                </MenuPopover>
+              </Menu>
+            ) : (
+              <Link href="/api/auth/login">
+                <Button appearance="subtle">Login</Button>
+              </Link>
+            )}
           </div>
         </div>
       </FluentProvider>
