@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "./components/navbar";
 import { Footer } from "./components/footer";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata: Metadata = {
   title: "Restart.",
@@ -14,25 +15,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ margin: "0px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexFlow: "column",
-            justifyContent: "space-between",
-            height: "100vh",
-            width: "100vw",
-          }}
-        >
-          <div>
-            <Navbar />
+      <UserProvider>
+        <body style={{ margin: "0px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "column",
+              justifyContent: "space-between",
+              height: "100vh",
+              width: "100vw",
+            }}
+          >
+            <div>
+              <Navbar />
+            </div>
+            <div>{children}</div>
+            <div>
+              <Footer></Footer>
+            </div>
           </div>
-          <div>{children}</div>
-          <div>
-            <Footer></Footer>
-          </div>
-        </div>
-      </body>
+        </body>
+      </UserProvider>
     </html>
   );
 }
