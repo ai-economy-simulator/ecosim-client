@@ -50,6 +50,11 @@ const Navbar = () => {
             </div>
           </div>
           <div>
+          <div
+              className={styles.flexcontainer}
+              style={{ marginRight: "8px", flexFlow: "row", height: "48px" }}
+            >
+              <div className={styles.flexitemmargin} style={{ height: "48px" }}>
             {user ? (
               <Menu>
                 <MenuTrigger disableButtonEnhancement>
@@ -82,6 +87,8 @@ const Navbar = () => {
                 <Button appearance="subtle">Login</Button>
               </Link>
             )}
+            </div>
+            </div>
           </div>
         </div>
       </FluentProvider>
