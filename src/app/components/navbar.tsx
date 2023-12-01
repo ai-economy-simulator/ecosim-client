@@ -49,8 +49,8 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          {user ? (
-            <div>
+          <div>
+            {user ? (
               <Menu>
                 <MenuTrigger disableButtonEnhancement>
                   <Button
@@ -77,12 +77,12 @@ const Navbar = () => {
                   </MenuList>
                 </MenuPopover>
               </Menu>
-            </div>
-          ) : (
-            <Link href="/api/auth/login">
-              <Button appearance="subtle">Login</Button>
-            </Link>
-          )}
+            ) : (
+              <Link href="/api/auth/login">
+                <Button appearance="subtle">Login</Button>
+              </Link>
+            )}
+          </div>
         </div>
       </FluentProvider>
     </>
