@@ -6,7 +6,7 @@ import { fetcher } from "../services/fetcher";
 import { useEffect } from "react";
 
 const getNewGameCode = async () => {
-  const res = await fetcher("/newGameCode", { cache: "no-store" });
+  const res = await fetcher("/game-code/new", { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Unable to get new game code");
   }
