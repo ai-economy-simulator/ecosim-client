@@ -3,7 +3,8 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 import { fetcher } from "../services/fetcher";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Spinner } from "@fluentui/react-components";
 
 const getNewGameCode = async () => {
   const res = await fetcher("/game-code/new", { cache: "no-store" });
@@ -15,23 +16,16 @@ const getNewGameCode = async () => {
 };
 
 export default function CreateGame() {
-  const { user, error: loginError } = useUser();
   const router = useRouter();
 
-  useEffect(() => {
-    if (loginError || !user) {
-      // add toast or some log
-      router.push("/api/auth/login");
-      // where will this redirect after login flow ends? I think to just /
-      return;
-    }
-
-    if (user) {
-      getNewGameCode().then((gameCode) => {
-        console.log(gameCode);
-      });
-    }
-  }, []);
+  getNewGameCode()
+    .then((gameCode) => {
+      router.push(`/game/${gameCode}`);
+    })
+    .catch((err) => {
+      // see how to use Next.js errors
+      console.error(err);
+    });
 
   // return loading spinner here
   return;
