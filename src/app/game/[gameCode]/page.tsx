@@ -8,13 +8,16 @@ import {
   InfoLabel,
   LargeTitle,
   Text,
+  useToastController,
 } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
 import { Copy24Regular } from "@fluentui/react-icons";
+import CustomToaster from "@/app/components/toaster";
 
 export default function Game({ params }: { params: { gameCode: string } }) {
   const { user } = useUser();
   const router = useRouter();
+  const { dispatchToast } = useToastController("toaster");
 
   // check if valid game code if someone directly comes on this URL
 
@@ -50,9 +53,22 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                         title="Copy to Clipboard"
                         appearance="subtle"
                         onClick={() => {
-                          navigator.clipboard.writeText(
-                            `I'm inviting you to join my Restart. game! Use the code ${params.gameCode} to join.`,
-                          );
+                          navigator.clipboard
+                            .writeText(
+                              `I'm inviting you to join my Restart. game! Use the code ${params.gameCode} to join.`,
+                            )
+                            .then(() => {
+                              dispatchToast(
+                                <CustomToaster text="Copied to clipboard" />,
+                                { intent: "success" },
+                              );
+                            })
+                            .catch((err) => {
+                              console.error(
+                                "Unable to copy to clipboard: ",
+                                err,
+                              );
+                            });
                         }}
                       />
                     </div>

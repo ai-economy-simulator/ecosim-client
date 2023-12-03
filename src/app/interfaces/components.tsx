@@ -1,0 +1,3 @@
+interface CustomToasterProps {
+  text: string;
+}

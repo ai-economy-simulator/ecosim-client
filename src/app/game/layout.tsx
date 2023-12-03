@@ -4,6 +4,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import {
   FluentProvider,
   Spinner,
+  Toaster,
   teamsLightTheme,
 } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
@@ -33,7 +34,12 @@ export default function RootLayout({
   }
 
   if (user) {
-    return <FluentProvider theme={teamsLightTheme}>{children}</FluentProvider>;
+    return (
+      <FluentProvider theme={teamsLightTheme}>
+        <Toaster toasterId="toaster" />
+        {children}
+      </FluentProvider>
+    );
   }
   return;
 }
