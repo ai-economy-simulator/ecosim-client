@@ -8,6 +8,10 @@ import {
   teamsLightTheme,
 } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
+import { GameContext } from "./gameContext";
+import * as Colyseus from "colyseus.js";
+import { useEffect, useState } from "react";
+import { GameContextData } from "../interfaces/contexts";
 
 export default function RootLayout({
   children,
@@ -16,6 +20,18 @@ export default function RootLayout({
 }) {
   const { user, error: loginError, isLoading: authLoading } = useUser();
   const router = useRouter();
+  const [gameContext, setGameContext] = useState<GameContextData>({
+    client: undefined,
+    room: undefined,
+    gameCode: undefined,
+  });
+
+  useEffect(() => {
+    if (user) {
+      const client = new Colyseus.Client("ws://localhost:2567");
+      setGameContext({ ...gameContext, client: client });
+    }
+  }, [user]);
 
   // This will ensure that all nested routes are auth protected
   if (authLoading) {
@@ -37,7 +53,9 @@ export default function RootLayout({
     return (
       <FluentProvider theme={teamsLightTheme}>
         <Toaster toasterId="toaster" />
-        {children}
+        <GameContext.Provider value={{ gameContext, setGameContext }}>
+          {children}
+        </GameContext.Provider>
       </FluentProvider>
     );
   }

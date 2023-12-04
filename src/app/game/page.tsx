@@ -3,29 +3,39 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 import { fetcher } from "../services/fetcher";
-import { useEffect, useState } from "react";
-import { Spinner } from "@fluentui/react-components";
+import { useContext, useEffect, useState } from "react";
+import { Spinner, useToastController } from "@fluentui/react-components";
+import { GameContext } from "./gameContext";
+import CustomToaster from "../components/toaster";
 
-const getNewGameCode = async () => {
-  const res = await fetcher("/game-code/new", { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error("Unable to get new game code");
-  }
-  const response: NewGameCodeGET = await res.json();
-  return response.gameCode;
-};
-
+// This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
   const router = useRouter();
+  const { gameContext, setGameContext } = useContext(GameContext);
+  const { dispatchToast } = useToastController("toaster");
 
-  getNewGameCode()
-    .then((gameCode) => {
-      router.push(`/game/${gameCode}`);
-    })
-    .catch((err) => {
-      // see how to use Next.js errors
-      console.error(err);
-    });
+  useEffect(() => {
+    if (gameContext && gameContext.client) {
+      console.log("Attempting to join restart_room...");
+      // add game room state schema here
+      gameContext.client
+        .joinOrCreate("restart_room")
+        .then((room) => {
+          console.log("Connected to room successfully. ", room);
+          setGameContext({ ...gameContext, room: room, gameCode: room.id });
+          router.push(`/game/${room.id}`);
+        })
+        .catch((err) => {
+          // how to use Next.js errors
+          console.error("Unable to connect to server. ", err);
+          dispatchToast(
+            <CustomToaster text="Unable to connect to server. Please try again later." />,
+            { intent: "error" },
+          );
+        });
+    }
+    // how many times does this run? Does this also run when we use setGameContext()?
+  }, [gameContext?.client]);
 
   // return loading spinner here
   return;
