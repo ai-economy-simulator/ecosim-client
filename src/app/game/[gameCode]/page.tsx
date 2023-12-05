@@ -16,9 +16,11 @@ import { Copy24Regular } from "@fluentui/react-icons";
 import CustomToaster from "@/app/components/toaster";
 import { useContext, useEffect } from "react";
 import { GameContext } from "../gameContext";
+import { joinOrCreateGameRoom } from "@/app/services/game";
 
 // This component relies on an already created game client
 export default function Game({ params }: { params: { gameCode: string } }) {
+  const { user } = useUser();
   const router = useRouter();
   const { dispatchToast } = useToastController("toaster");
 
@@ -26,11 +28,10 @@ export default function Game({ params }: { params: { gameCode: string } }) {
 
   // This useEffect connects to an already existing room ID for users direcly landing on route /game/[gameCode]
   useEffect(() => {
-    if (gameContext && gameContext.client) {
+    if (gameContext && gameContext.client && user) {
       if (!gameContext.room) {
         console.log("Attempting to join room with ID: ", params.gameCode);
-        gameContext.client
-          .joinById(params.gameCode)
+        joinOrCreateGameRoom(gameContext.client, user, params.gameCode)
           .then((room) => {
             console.log("Connected to room successfully. ", room);
             setGameContext({ ...gameContext, room: room, gameCode: room.id });
@@ -106,7 +107,11 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                   </div>
                 </div>
               </div>
-              <div className={styles.flexitemmargin}>Other Players</div>
+              <div className={styles.flexitemmargin}>
+                <div className={styles.flexcontainer}>
+                  {/* display avatar of each player here */}
+                </div>
+              </div>
             </div>
           </div>
           <div className={styles.flexitemmargin}>Sectors</div>

@@ -7,19 +7,20 @@ import { useContext, useEffect, useState } from "react";
 import { Spinner, useToastController } from "@fluentui/react-components";
 import { GameContext } from "./gameContext";
 import CustomToaster from "../components/toaster";
+import { joinOrCreateGameRoom } from "../services/game";
 
 // This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
+  const { user } = useUser();
   const router = useRouter();
   const { gameContext, setGameContext } = useContext(GameContext);
   const { dispatchToast } = useToastController("toaster");
 
   useEffect(() => {
-    if (gameContext && gameContext.client) {
+    if (gameContext && gameContext.client && user) {
       console.log("Attempting to join restart_room...");
       // add game room state schema here
-      gameContext.client
-        .joinOrCreate("restart_room")
+      joinOrCreateGameRoom(gameContext.client, user, undefined)
         .then((room) => {
           console.log("Connected to room successfully. ", room);
           setGameContext({ ...gameContext, room: room, gameCode: room.id });
