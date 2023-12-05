@@ -17,7 +17,7 @@ const joinOrCreateGameRoom = async (
   if (gameCode) {
     return client.joinById<RestartRoomState>(gameCode, gameJoinOptions);
   }
-  return client.joinOrCreate<RestartRoomState>("restart_room", gameJoinOptions);
+  return client.create<RestartRoomState>("restart_room", gameJoinOptions);
 };
 
 export { joinOrCreateGameRoom };
