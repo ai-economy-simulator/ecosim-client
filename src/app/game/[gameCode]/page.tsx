@@ -3,8 +3,10 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styles from "../../page.module.css";
 import {
+  Avatar,
   Body1,
   Button,
+  Divider,
   InfoLabel,
   LargeTitle,
   Spinner,
@@ -27,21 +29,6 @@ export default function Game({ params }: { params: { gameCode: string } }) {
   const { dispatchToast } = useToastController("toaster");
 
   const { gameContext, setGameContext } = useContext(GameContext);
-
-  const getAllPlayers = useMemo(() => {
-    if (gameContext && gameContext.room) {
-      return mapToArray(
-        gameContext.room.state.players,
-        (_: string, value: Player) => {
-          return (
-            <div className={styles.flexitemmargin}>
-              <Text>{value.playerName}</Text>
-            </div>
-          );
-        },
-      );
-    }
-  }, [JSON.stringify(gameContext?.room?.state.players)]);
 
   // This useEffect connects to an already existing room ID for users directly landing on route /game/[gameCode]
   useEffect(() => {
@@ -133,9 +120,39 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                 </div>
               </div>
               <div className={styles.flexitemmargin}>
-                <div className={styles.flexcontainer}>
-                  {/* display avatar of each player here */}
-                  {getAllPlayers}
+                <Divider vertical appearance="brand" />
+              </div>
+              <div className={styles.flexitemmargin}>
+                <div
+                  className={styles.flexcontainer}
+                  style={{ flexFlow: "column", alignItems: "start" }}
+                >
+                  <div className={styles.flexitemmargin}>
+                    <Body1>Connected Players</Body1>
+                  </div>
+                  <div className={styles.flexitemmargin}>
+                    <div className={styles.flexcontainer}>
+                      {/* {getAllPlayers} */}
+                      {mapToArray(
+                        gameContext.room.state.players,
+                        (_: string, player: Player) => {
+                          return (
+                            <div
+                              className={styles.flexitemmargin}
+                              style={{ marginRight: "16px" }}
+                            >
+                              <Avatar
+                                name={player.playerName}
+                                image={{ src: player.avatar }}
+                                title={player.playerName}
+                                size={56}
+                              />
+                            </div>
+                          );
+                        },
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

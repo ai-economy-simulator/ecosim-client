@@ -4,6 +4,7 @@ export class Player extends Schema {
   playerName: string | undefined;
   avatar: string | undefined;
 
+  // make email private. Can we remove this from here?
   email: string | undefined;
 
   constructor({
