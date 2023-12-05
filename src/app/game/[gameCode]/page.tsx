@@ -14,9 +14,11 @@ import {
 import { useRouter } from "next/navigation";
 import { Copy24Regular } from "@fluentui/react-icons";
 import CustomToaster from "@/app/components/toaster";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { GameContext } from "../gameContext";
 import { joinOrCreateGameRoom } from "@/app/services/game";
+import { Player, RestartRoomState } from "@/app/interfaces/gameRoomState";
+import { mapToArray } from "@/app/services/conversions";
 
 // This component relies on an already created game client
 export default function Game({ params }: { params: { gameCode: string } }) {
@@ -26,7 +28,22 @@ export default function Game({ params }: { params: { gameCode: string } }) {
 
   const { gameContext, setGameContext } = useContext(GameContext);
 
-  // This useEffect connects to an already existing room ID for users direcly landing on route /game/[gameCode]
+  const getAllPlayers = useMemo(() => {
+    if (gameContext && gameContext.room) {
+      return mapToArray(
+        gameContext.room.state.players,
+        (_: string, value: Player) => {
+          return (
+            <div className={styles.flexitemmargin}>
+              <Text>{value.playerName}</Text>
+            </div>
+          );
+        },
+      );
+    }
+  }, [JSON.stringify(gameContext?.room?.state.players)]);
+
+  // This useEffect connects to an already existing room ID for users directly landing on route /game/[gameCode]
   useEffect(() => {
     if (gameContext && gameContext.client && user) {
       if (!gameContext.room) {
@@ -34,7 +51,15 @@ export default function Game({ params }: { params: { gameCode: string } }) {
         joinOrCreateGameRoom(gameContext.client, user, params.gameCode)
           .then((room) => {
             console.log("Connected to room successfully. ", room);
-            setGameContext({ ...gameContext, room: room, gameCode: room.id });
+            setGameContext((prev) => {
+              return { ...prev, room: room, gameCode: room.id };
+            });
+
+            room.onStateChange((state: RestartRoomState) => {
+              setGameContext((prev) => {
+                return { ...prev };
+              });
+            });
           })
           .catch((err) => {
             // How to get room capacity is full or room does not exist? Check if valid game code when someone directly comes on this URL
@@ -110,6 +135,7 @@ export default function Game({ params }: { params: { gameCode: string } }) {
               <div className={styles.flexitemmargin}>
                 <div className={styles.flexcontainer}>
                   {/* display avatar of each player here */}
+                  {getAllPlayers}
                 </div>
               </div>
             </div>
