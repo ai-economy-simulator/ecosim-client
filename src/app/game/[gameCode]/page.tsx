@@ -7,6 +7,7 @@ import {
   Button,
   InfoLabel,
   LargeTitle,
+  Spinner,
   Text,
   useToastController,
 } from "@fluentui/react-components";
@@ -47,67 +48,75 @@ export default function Game({ params }: { params: { gameCode: string } }) {
     }
   }, [gameContext?.client]);
 
-  // Show this UI only if user connected to room successfully
-  return (
-    <>
-      <div className={styles.flexcontainer} style={{ flexFlow: "column" }}>
-        <div className={styles.flexitemmargin} style={{ height: "10vh" }}>
-          <div className={styles.flexcontainer} style={{ flexFlow: "row" }}>
-            <div className={styles.flexitemmargin}>
-              <div
-                className={styles.flexcontainer}
-                style={{ flexFlow: "column" }}
-              >
-                <div className={styles.flexitemmargin}>
-                  <Body1>Game Code</Body1>
-                  <InfoLabel
-                    info={"Share this code with others to allow them to join."}
-                  />
-                </div>
-                <div className={styles.flexitemmargin}>
-                  <div
-                    className={styles.flexcontainer}
-                    style={{ flexFlow: "row" }}
-                  >
-                    <div className={styles.flexitemmargin}>
-                      <LargeTitle style={{ letterSpacing: "12px" }}>
-                        {params.gameCode}
-                      </LargeTitle>
-                    </div>
-                    <div className={styles.flexitemmargin}>
-                      <Button
-                        icon={<Copy24Regular />}
-                        title="Copy to Clipboard"
-                        appearance="subtle"
-                        onClick={() => {
-                          navigator.clipboard
-                            .writeText(
-                              `I'm inviting you to join my Restart. game! Use the code ${params.gameCode} or link ${window.location.href} to join.`,
-                            )
-                            .then(() => {
-                              dispatchToast(
-                                <CustomToaster text="Copied to clipboard" />,
-                                { intent: "success" },
-                              );
-                            })
-                            .catch((err) => {
-                              console.error(
-                                "Unable to copy to clipboard: ",
-                                err,
-                              );
-                            });
-                        }}
-                      />
+  if (gameContext?.room) {
+    return (
+      <>
+        <div className={styles.flexcontainer} style={{ flexFlow: "column" }}>
+          <div className={styles.flexitemmargin} style={{ height: "10vh" }}>
+            <div className={styles.flexcontainer} style={{ flexFlow: "row" }}>
+              <div className={styles.flexitemmargin}>
+                <div
+                  className={styles.flexcontainer}
+                  style={{ flexFlow: "column" }}
+                >
+                  <div className={styles.flexitemmargin}>
+                    <Body1>Game Code</Body1>
+                    <InfoLabel
+                      info={
+                        "Share this code with others to allow them to join."
+                      }
+                    />
+                  </div>
+                  <div className={styles.flexitemmargin}>
+                    <div
+                      className={styles.flexcontainer}
+                      style={{ flexFlow: "row" }}
+                    >
+                      <div className={styles.flexitemmargin}>
+                        <LargeTitle style={{ letterSpacing: "12px" }}>
+                          {params.gameCode}
+                        </LargeTitle>
+                      </div>
+                      <div className={styles.flexitemmargin}>
+                        <Button
+                          icon={<Copy24Regular />}
+                          title="Copy to Clipboard"
+                          appearance="subtle"
+                          onClick={() => {
+                            navigator.clipboard
+                              .writeText(
+                                `I'm inviting you to join my Restart. game! Use the code ${params.gameCode} or link ${window.location.href} to join.`,
+                              )
+                              .then(() => {
+                                dispatchToast(
+                                  <CustomToaster text="Copied to clipboard" />,
+                                  { intent: "success" },
+                                );
+                              })
+                              .catch((err) => {
+                                console.error(
+                                  "Unable to copy to clipboard: ",
+                                  err,
+                                );
+                              });
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className={styles.flexitemmargin}>Other Players</div>
             </div>
-            <div className={styles.flexitemmargin}>Other Players</div>
           </div>
+          <div className={styles.flexitemmargin}>Sectors</div>
         </div>
-        <div className={styles.flexitemmargin}>Sectors</div>
-      </div>
+      </>
+    );
+  }
+  return (
+    <>
+      <Spinner />
     </>
   );
 }
