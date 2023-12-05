@@ -168,5 +168,3 @@ export default function Game({ params }: { params: { gameCode: string } }) {
     </>
   );
 }
-
-export { Game };
