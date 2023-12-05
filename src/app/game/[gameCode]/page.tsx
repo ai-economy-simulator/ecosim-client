@@ -47,6 +47,7 @@ export default function Game({ params }: { params: { gameCode: string } }) {
     }
   }, [gameContext?.client]);
 
+  // Show this UI only if user connected to room successfully
   return (
     <>
       <div className={styles.flexcontainer} style={{ flexFlow: "column" }}>

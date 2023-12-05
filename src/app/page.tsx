@@ -19,9 +19,11 @@ import {
 } from "@fluentui/react-components";
 import { useState } from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [gameToJoinCode, setGameToJoinCode] = useState("");
+  const router = useRouter();
 
   return (
     <>
@@ -84,6 +86,9 @@ export default function Home() {
                         appearance="subtle"
                         size="large"
                         disabled={gameToJoinCode === "" ? true : false}
+                        onClick={() => {
+                          router.push(`/game/${gameToJoinCode}`);
+                        }}
                       >
                         Join
                       </Button>
