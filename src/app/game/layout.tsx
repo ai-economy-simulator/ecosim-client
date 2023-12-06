@@ -28,7 +28,9 @@ export default function RootLayout({
 
   useEffect(() => {
     if (user) {
-      const client = new Colyseus.Client("ws://localhost:2567");
+      const client = new Colyseus.Client(
+        process.env.NEXT_PUBLIC_GAMESERVER_URL,
+      );
       setGameContext({ ...gameContext, client: client });
     }
   }, [user]);
