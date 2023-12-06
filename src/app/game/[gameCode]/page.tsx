@@ -9,7 +9,9 @@ import {
   Divider,
   InfoLabel,
   LargeTitle,
+  Persona,
   Spinner,
+  Switch,
   Text,
   useToastController,
 } from "@fluentui/react-components";
@@ -21,6 +23,10 @@ import { GameContext } from "../gameContext";
 import { joinOrCreateGameRoom } from "@/app/services/game";
 import { Player, RestartRoomState } from "@/app/interfaces/gameRoomState";
 import { mapToArray } from "@/app/services/conversions";
+import {
+  MessageTypes,
+  PlayerReadyMessageData,
+} from "@/app/interfaces/serverMessages";
 
 // This component relies on an already created game client
 export default function Game({ params }: { params: { gameCode: string } }) {
@@ -42,7 +48,9 @@ export default function Game({ params }: { params: { gameCode: string } }) {
               return { ...prev, room: room, gameCode: room.id };
             });
 
-            room.onStateChange((state: RestartRoomState) => {
+            // This is a hack to force re-render of component
+            // See if this is really required or is there some better way?
+            room.onStateChange((_: RestartRoomState) => {
               setGameContext((prev) => {
                 return { ...prev };
               });
@@ -65,7 +73,7 @@ export default function Game({ params }: { params: { gameCode: string } }) {
     return (
       <>
         <div className={styles.flexcontainer} style={{ flexFlow: "column" }}>
-          <div className={styles.flexitemmargin} style={{ height: "10vh" }}>
+          <div className={styles.flexitemmargin} style={{ height: "15vh" }}>
             <div className={styles.flexcontainer} style={{ flexFlow: "row" }}>
               <div className={styles.flexitemmargin}>
                 <div
@@ -132,7 +140,6 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                   </div>
                   <div className={styles.flexitemmargin}>
                     <div className={styles.flexcontainer}>
-                      {/* {getAllPlayers} */}
                       {mapToArray(
                         gameContext.room.state.players,
                         (_: string, player: Player) => {
@@ -141,11 +148,21 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                               className={styles.flexitemmargin}
                               style={{ marginRight: "16px" }}
                             >
-                              <Avatar
-                                name={player.playerName}
-                                image={{ src: player.avatar }}
-                                title={player.playerName}
-                                size={56}
+                              <Persona
+                                avatar={{
+                                  name: player.playerName,
+                                  image: { src: player.avatar },
+                                  title: player.playerName,
+                                  size: 56,
+                                }}
+                                textPosition="below"
+                                size="medium"
+                                primaryText={
+                                  player.isReady ? "Ready" : "Waiting"
+                                }
+                                presence={{
+                                  status: player.isReady ? "available" : "away",
+                                }}
                               />
                             </div>
                           );
@@ -157,7 +174,24 @@ export default function Game({ params }: { params: { gameCode: string } }) {
               </div>
             </div>
           </div>
-          <div className={styles.flexitemmargin}>Sectors</div>
+          <div className={styles.flexitemmargin}>
+            <Switch
+              label="Ready"
+              checked={
+                gameContext.room.state.players.get(gameContext.room.sessionId)
+                  ?.isReady
+              }
+              onChange={(_, checked) => {
+                const playerReadyMessageData: PlayerReadyMessageData = {
+                  playerReady: checked.checked,
+                };
+                gameContext.room?.send(
+                  MessageTypes.playerReady,
+                  playerReadyMessageData,
+                );
+              }}
+            />
+          </div>
         </div>
       </>
     );
