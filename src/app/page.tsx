@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import { Carousel } from "./components/carousel";
 
 export default function Home() {
   const [gameToJoinCode, setGameToJoinCode] = useState("");
@@ -101,7 +102,7 @@ export default function Home() {
               className={styles.flexitemmargin}
               style={{ height: "25rem", width: "25rem" }}
             >
-              <Image src="/cities_pixel.jpg" fit="cover" shape="circular" />
+              <Carousel />
             </div>
           </div>
         </main>
