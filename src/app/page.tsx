@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const [gameToJoinCode, setGameToJoinCode] = useState("");
   const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <>
@@ -83,9 +84,16 @@ export default function Home() {
                     </div>
                     <div className={styles.flexitemmargin}>
                       <Button
+                        style={{
+                          backgroundColor:
+                            isHovered && gameToJoinCode !== "" ? "#e8f1fd" : "",
+                          color: gameToJoinCode === "" ? "" : "#1A73E8",
+                        }}
                         appearance="subtle"
                         size="large"
                         disabled={gameToJoinCode === "" ? true : false}
+                        onMouseOver={() => setIsHovered(true)}
+                        onMouseOut={() => setIsHovered(false)}
                         onClick={() => {
                           router.push(`/game/${gameToJoinCode}`);
                         }}
