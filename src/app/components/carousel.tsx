@@ -6,78 +6,55 @@ import {
   Button,
   FluentProvider,
   Image,
+  Tab,
+  TabList,
   teamsLightTheme,
 } from "@fluentui/react-components";
 import {
   ArrowCircleLeft48Regular,
   ArrowCircleRight48Regular,
+  Circle12Filled,
+  Circle12Regular,
 } from "@fluentui/react-icons";
 
 const Carousel = () => {
-  let [counter, setCounter] = useState(1);
-  let [imagesrc, setImagesrc] = useState("/cities_pixel.jpg");
-  let [text, setText] = useState(`${counter}`);
+  let [counter, setCounter] = useState(0);
+  var imageArray = ["/cities_pixel.jpg", "/monopoly.jpeg", "/business.jpeg"];
+  let [imagesrc, setImagesrc] = useState(imageArray[0]);
 
   useEffect(() => {
     handleCarouselChange();
   }, [counter]);
 
   const handleLeftClick = () => {
-    if (counter != 1) {
-      setCounter(counter - 1);
-    }
+    setCounter((prev) => {
+      return (counter - 1 + imageArray.length) % imageArray.length;
+    });
   };
 
   const handleRightClick = () => {
-    if (counter != 3) {
-      setCounter(counter + 1);
-    }
+    setCounter((prev) => {
+      return (counter + 1) % imageArray.length;
+    });
   };
 
   const handleCarouselChange = () => {
-    switch (counter) {
-      case 1:
-        setImagesrc("/cities_pixel.jpg");
-        setText(`${counter}`);
-        break;
-      case 2:
-        setImagesrc("/monopoly.jpeg");
-        setText(`${counter}`);
-        break;
-      case 3:
-        setImagesrc("/business.jpeg");
-        setText(`${counter}`);
-        break;
-    }
+    setImagesrc(imageArray[counter]);
   };
 
-  const Dots = () => {
-    const divs = [];
+  const renderTabs = () => {
+    const tabs = [];
 
-    for (let i = 1; i <= 3; i++) {
-      divs.push(
-        <div
-          key={i}
-          style={{
-            width: "5px",
-            height: "5px",
-            margin: "5px",
-            border: "solid",
-            backgroundColor: `${i === counter ? "black" : "white"}`,
-            borderRadius: "50%",
-          }}
-        ></div>,
+    for (let i = 0; i < imageArray.length; i++) {
+      tabs.push(
+        <Tab
+          icon={i === counter ? <Circle12Filled /> : <Circle12Regular />}
+          value={`tab${i}`}
+        />,
       );
     }
 
-    return (
-      <div
-        className={styles.flexcontainer}
-        style={{ justifyContent: "center", marginTop: "20px" }}
-      >
-        {divs}
-      </div>
-    );
+    return <>{tabs}</>;
   };
 
   return (
@@ -88,7 +65,7 @@ const Carousel = () => {
             className={styles.flexcontainer}
             style={{ justifyContent: "center" }}
           >
-            <div style={{ opacity: `${counter === 1 ? "0.6" : "1"}` }}>
+            <div>
               <Button
                 icon={<ArrowCircleLeft48Regular />}
                 onClick={handleLeftClick}
@@ -99,19 +76,11 @@ const Carousel = () => {
               className={styles.flexcontainer}
               style={{ flexDirection: "column", margin: "20px" }}
             >
-              <div style={{ height: "250px", width: "250px" }}>
-                <Image
-                  src={imagesrc}
-                  fit="cover"
-                  shape="circular"
-                  height="50px"
-                />
-              </div>
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
-                {text}
+              <div style={{ height: "280px", width: "280px" }}>
+                <Image src={imagesrc} fit="cover" shape="circular" />
               </div>
             </div>
-            <div style={{ opacity: `${counter === 3 ? "0.6" : "1"}` }}>
+            <div>
               <Button
                 icon={<ArrowCircleRight48Regular />}
                 onClick={handleRightClick}
@@ -119,7 +88,12 @@ const Carousel = () => {
               ></Button>
             </div>
           </div>
-          <Dots />
+          <div
+            className={styles.flexcontainer}
+            style={{ justifyContent: "center", marginTop: "20px" }}
+          >
+            <TabList>{renderTabs()}</TabList>
+          </div>
         </div>
       </FluentProvider>
     </>
