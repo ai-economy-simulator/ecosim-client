@@ -36,6 +36,18 @@ export default function Game({ params }: { params: { gameCode: string } }) {
 
   const { gameContext, setGameContext } = useContext(GameContext);
 
+  const allPlayerReady = useMemo(() => {
+    if (gameContext && gameContext.room) {
+      for (const player of gameContext.room.state.players.values()) {
+        if (!player.isReady) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }, [JSON.stringify(gameContext?.room?.state.players)]);
+
   // This useEffect connects to an already existing room ID for users directly landing on route /game/[gameCode]
   useEffect(() => {
     if (gameContext && gameContext.client && user) {
@@ -191,6 +203,18 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                 );
               }}
             />
+          </div>
+          <div className={styles.flexitemmargin}>
+            {allPlayerReady ? (
+              gameContext.room.state.gameAdmin ===
+              gameContext.room.sessionId ? (
+                <Button>Start Game</Button>
+              ) : (
+                <Body1>Waiting for game admin to start</Body1>
+              )
+            ) : (
+              <Body1>Waiting for everyone to get ready</Body1>
+            )}
           </div>
         </div>
       </>

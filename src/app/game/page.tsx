@@ -9,6 +9,10 @@ import { GameContext } from "./gameContext";
 import CustomToaster from "../components/toaster";
 import { joinOrCreateGameRoom } from "../services/game";
 import { RestartRoomState } from "../interfaces/gameRoomState";
+import {
+  MessageTypes,
+  SetGameAdminMessageData,
+} from "../interfaces/serverMessages";
 
 // This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
@@ -25,6 +29,12 @@ export default function CreateGame() {
         .then((room) => {
           console.log("Connected to room successfully. ", room);
           setGameContext({ ...gameContext, room: room, gameCode: room.id });
+
+          const setGameAdminMessage: SetGameAdminMessageData = {
+            playerID: room.sessionId,
+          };
+          // Protect this so that unauthorized users cannot send this message
+          room.send(MessageTypes.setGameAdmin, setGameAdminMessage);
 
           room.onStateChange((state: RestartRoomState) => {
             setGameContext((prev) => {

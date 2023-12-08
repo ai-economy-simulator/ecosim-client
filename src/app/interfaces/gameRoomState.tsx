@@ -29,6 +29,7 @@ export class RestartRoomState extends Schema {
   stockPrice: number = 100;
   activePlayer: string | null = null;
   isGameStarted: boolean = false;
+  gameAdmin: string | null = null;
 
   players = new MapSchema<Player>();
 }
