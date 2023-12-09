@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "../page.module.css";
 import {
   Button,
@@ -16,15 +16,26 @@ import {
   Circle12Filled,
   Circle12Regular,
 } from "@fluentui/react-icons";
+import type {
+  SelectTabData,
+  SelectTabEvent,
+  TabValue,
+} from "@fluentui/react-components";
 
 const Carousel = () => {
   const [imageCounter, setImageCounter] = useState(0);
   const imageArray = ["/cities_pixel.jpg", "/monopoly.jpeg", "/business.jpeg"];
   const [imageSrc, setImageSrc] = useState(imageArray[0]);
+  const [selectedValue, setSelectedValue] = useState<TabValue>(0);
 
   useEffect(() => {
     setImageSrc(imageArray[imageCounter]);
+    setSelectedValue(imageCounter);
   }, [imageCounter]);
+
+  useEffect(() => {
+    setImageCounter(selectedValue);
+  }, [selectedValue]);
 
   const handleLeftButton = () => {
     setImageCounter((prev) => {
@@ -38,6 +49,10 @@ const Carousel = () => {
     });
   };
 
+  const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
+    setSelectedValue(data.value);
+  };
+
   const renderTabs = () => {
     const tabs = [];
 
@@ -45,7 +60,7 @@ const Carousel = () => {
       tabs.push(
         <Tab
           icon={i === imageCounter ? <Circle12Filled /> : <Circle12Regular />}
-          value={`tab${i}`}
+          value={i}
           key={`tab${i}`}
         />,
       );
@@ -90,7 +105,14 @@ const Carousel = () => {
           className={styles.flexcontainer}
           style={{ justifyContent: "center" }}
         >
-          <TabList appearance="transparent">{renderTabs()}</TabList>
+          <TabList
+            defaultSelectedValue={0}
+            appearance="transparent"
+            selectedValue={selectedValue}
+            onTabSelect={onTabSelect}
+          >
+            {renderTabs()}
+          </TabList>
         </div>
       </div>
     </>
