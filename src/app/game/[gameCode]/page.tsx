@@ -159,7 +159,7 @@ export default function Game({ params }: { params: { gameCode: string } }) {
                             <div
                               className={styles.flexitemmargin}
                               style={{ marginRight: "16px" }}
-                              key={player.playerName}
+                              key={player.playerID}
                             >
                               <Persona
                                 avatar={{
