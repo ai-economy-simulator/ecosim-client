@@ -26,11 +26,11 @@ import {
   MessageTypes,
   PlayerReadyMessageData,
 } from "@/app/interfaces/serverMessages";
-import customUseUser from "@/app/components/customUseUser";
+import CustomUseUser from "@/app/components/customUseUser";
 
 // This component relies on an already created game client
 export default function Game({ params }: { params: { gameCode: string } }) {
-  const { user } = customUseUser();
+  const { user } = CustomUseUser();
   const router = useRouter();
   const { dispatchToast } = useToastController("toaster");
 

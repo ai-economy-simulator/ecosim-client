@@ -12,11 +12,11 @@ import {
   MessageTypes,
   SetGameAdminMessageData,
 } from "../interfaces/serverMessages";
-import customUseUser from "../components/customUseUser";
+import CustomUseUser from "../components/customUseUser";
 
 // This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
-  const { user } = customUseUser();
+  const { user } = CustomUseUser();
   const router = useRouter();
   const { gameContext, setGameContext } = useContext(GameContext);
   const { dispatchToast } = useToastController("toaster");

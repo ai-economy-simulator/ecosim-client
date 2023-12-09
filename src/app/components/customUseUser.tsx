@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 
 const localUserRandomizer = Math.floor(Math.random() * 100);
 
-export default function customUseUser() {
+export default function CustomUseUser() {
   const [localUser, setLocalUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const realUser = useUser();
 
   useEffect(() => {
     setIsLoading(false);
@@ -24,7 +26,7 @@ export default function customUseUser() {
   }, []);
 
   if (process.env.NODE_ENV === "production") {
-    return useUser();
+    return realUser;
   }
 
   return {

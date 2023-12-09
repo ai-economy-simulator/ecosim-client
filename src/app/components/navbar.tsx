@@ -19,10 +19,10 @@ import {
   Title2,
   teamsLightTheme,
 } from "@fluentui/react-components";
-import customUseUser from "./customUseUser";
+import CustomUseUser from "./customUseUser";
 
 const Navbar = () => {
-  const { user, error } = customUseUser();
+  const { user, error } = CustomUseUser();
 
   return (
     <>
