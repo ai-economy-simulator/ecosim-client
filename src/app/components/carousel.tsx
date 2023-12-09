@@ -46,6 +46,7 @@ const Carousel = () => {
         <Tab
           icon={i === imageCounter ? <Circle12Filled /> : <Circle12Regular />}
           value={`tab${i}`}
+          key={`tab${i}`}
         />,
       );
     }
