@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 import { fetcher } from "../services/fetcher";
 import { useContext, useEffect, useState } from "react";
@@ -9,10 +8,15 @@ import { GameContext } from "./gameContext";
 import CustomToaster from "../components/toaster";
 import { joinOrCreateGameRoom } from "../services/game";
 import { RestartRoomState } from "../interfaces/gameRoomState";
+import {
+  MessageTypes,
+  SetGameAdminMessageData,
+} from "../interfaces/serverMessages";
+import CustomUseUser from "../components/customUseUser";
 
 // This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
-  const { user } = useUser();
+  const { user } = CustomUseUser();
   const router = useRouter();
   const { gameContext, setGameContext } = useContext(GameContext);
   const { dispatchToast } = useToastController("toaster");
@@ -25,6 +29,12 @@ export default function CreateGame() {
         .then((room) => {
           console.log("Connected to room successfully. ", room);
           setGameContext({ ...gameContext, room: room, gameCode: room.id });
+
+          const setGameAdminMessage: SetGameAdminMessageData = {
+            playerID: room.sessionId,
+          };
+          // Protect this so that unauthorized users cannot send this message
+          room.send(MessageTypes.setGameAdmin, setGameAdminMessage);
 
           room.onStateChange((state: RestartRoomState) => {
             setGameContext((prev) => {

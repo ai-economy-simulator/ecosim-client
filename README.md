@@ -14,6 +14,12 @@ If AI is too smart now, can it do this?
 
 1. Run `npm run dev`. Once the server starts, open localhost with the correct port in the browser. Most probably, it would be `http://localhost:3000`.
 
+1. To link the client to the server create a `.env.local` file in the root directly with the environment variables in the below format.
+
+```
+NEXT_PUBLIC_GAMESERVER_URL='ws://localhost:2567'
+```
+
 ## Contributing Guidelines
 
 1. Raise PRs only to the `main` branch.
