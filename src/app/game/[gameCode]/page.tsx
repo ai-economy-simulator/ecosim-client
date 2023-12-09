@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styles from "../../page.module.css";
 import {
   Avatar,
@@ -27,10 +26,11 @@ import {
   MessageTypes,
   PlayerReadyMessageData,
 } from "@/app/interfaces/serverMessages";
+import customUseUser from "@/app/components/customUseUser";
 
 // This component relies on an already created game client
 export default function Game({ params }: { params: { gameCode: string } }) {
-  const { user } = useUser();
+  const { user } = customUseUser();
   const router = useRouter();
   const { dispatchToast } = useToastController("toaster");
 

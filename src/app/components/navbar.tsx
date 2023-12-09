@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styles from "../page.module.css";
 import { SignOut20Regular } from "@fluentui/react-icons";
 import {
@@ -20,9 +19,10 @@ import {
   Title2,
   teamsLightTheme,
 } from "@fluentui/react-components";
+import customUseUser from "./customUseUser";
 
 const Navbar = () => {
-  const { user, error } = useUser();
+  const { user, error } = customUseUser();
 
   return (
     <>
@@ -50,44 +50,44 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-          <div
+            <div
               className={styles.flexcontainer}
               style={{ marginRight: "8px", flexFlow: "row", height: "48px" }}
             >
               <div className={styles.flexitemmargin} style={{ height: "48px" }}>
-            {user ? (
-              <Menu>
-                <MenuTrigger disableButtonEnhancement>
-                  <Button
-                    appearance="transparent"
-                    size="large"
-                    icon={
-                      <Avatar
-                        name={user.name ? user.name : "Name NA"}
-                        color="colorful"
-                        size={36}
-                        image={{ src: user.picture ? user.picture : "" }}
-                      />
-                    }
-                  ></Button>
-                </MenuTrigger>
-                <MenuPopover>
-                  <MenuList>
-                    <MenuItemLink
-                      href="/api/auth/logout"
-                      icon={<SignOut20Regular />}
-                    >
-                      Logout
-                    </MenuItemLink>
-                  </MenuList>
-                </MenuPopover>
-              </Menu>
-            ) : (
-              <Link href="/api/auth/login">
-                <Button appearance="subtle">Login</Button>
-              </Link>
-            )}
-            </div>
+                {user ? (
+                  <Menu>
+                    <MenuTrigger disableButtonEnhancement>
+                      <Button
+                        appearance="transparent"
+                        size="large"
+                        icon={
+                          <Avatar
+                            name={user.name ? user.name : "Name NA"}
+                            color="colorful"
+                            size={36}
+                            image={{ src: user.picture ? user.picture : "" }}
+                          />
+                        }
+                      ></Button>
+                    </MenuTrigger>
+                    <MenuPopover>
+                      <MenuList>
+                        <MenuItemLink
+                          href="/api/auth/logout"
+                          icon={<SignOut20Regular />}
+                        >
+                          Logout
+                        </MenuItemLink>
+                      </MenuList>
+                    </MenuPopover>
+                  </Menu>
+                ) : (
+                  <Link href="/api/auth/login">
+                    <Button appearance="subtle">Login</Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>

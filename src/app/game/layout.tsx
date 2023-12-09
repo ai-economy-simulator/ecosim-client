@@ -12,13 +12,14 @@ import { GameContext } from "./gameContext";
 import * as Colyseus from "colyseus.js";
 import { useEffect, useState } from "react";
 import { GameContextData } from "../interfaces/contexts";
+import customUseUser from "../components/customUseUser";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user, error: loginError, isLoading: authLoading } = useUser();
+  const { user, error: loginError, isLoading: authLoading } = customUseUser();
   const router = useRouter();
   const [gameContext, setGameContext] = useState<GameContextData>({
     client: undefined,
