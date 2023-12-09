@@ -51,7 +51,7 @@ export default function GameLobby({
     return (
       <>
         <div className={styles.flexcontainer} style={{ flexFlow: "column" }}>
-          <div className={styles.flexitemmargin} style={{ height: "15vh" }}>
+          <div className={styles.flexitemmargin} style={{ height: "20vh" }}>
             <div className={styles.flexcontainer} style={{ flexFlow: "row" }}>
               <div className={styles.flexitemmargin}>
                 <div
@@ -138,6 +138,12 @@ export default function GameLobby({
                                 size="medium"
                                 primaryText={
                                   player.isReady ? "Ready" : "Waiting"
+                                }
+                                secondaryText={
+                                  gameContext.room?.state.gameAdmin ===
+                                  player.playerID
+                                    ? "Game Admin"
+                                    : ""
                                 }
                                 presence={{
                                   status: player.isReady ? "available" : "away",
