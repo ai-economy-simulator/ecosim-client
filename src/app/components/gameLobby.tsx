@@ -117,7 +117,10 @@ export default function GameLobby({
                     <Body1>Connected Players</Body1>
                   </div>
                   <div className={styles.flexitemmargin}>
-                    <div className={styles.flexcontainer}>
+                    <div
+                      className={styles.flexcontainer}
+                      style={{ alignItems: "start" }}
+                    >
                       {mapToArray(
                         gameContext.room.state.players,
                         (_: string, player: Player) => {
