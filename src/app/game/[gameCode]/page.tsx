@@ -15,7 +15,11 @@ import {
   useToastController,
 } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
-import { Copy24Regular } from "@fluentui/react-icons";
+import {
+  Copy24Regular,
+  AirplaneTakeOff24Filled,
+  AirplaneTakeOff24Regular,
+} from "@fluentui/react-icons";
 import CustomToaster from "@/app/components/toaster";
 import { useContext, useEffect, useMemo } from "react";
 import { GameContext } from "../gameContext";
@@ -25,6 +29,7 @@ import { mapToArray } from "@/app/services/conversions";
 import {
   MessageTypes,
   PlayerReadyMessageData,
+  StartGameMessageData,
 } from "@/app/interfaces/serverMessages";
 import CustomUseUser from "@/app/components/customUseUser";
 
@@ -209,7 +214,22 @@ export default function Game({ params }: { params: { gameCode: string } }) {
             {allPlayerReady ? (
               gameContext.room.state.gameAdmin ===
               gameContext.room.sessionId ? (
-                <Button>Start Game</Button>
+                <Button
+                  appearance="primary"
+                  size="large"
+                  icon={<AirplaneTakeOff24Filled />}
+                  onClick={() => {
+                    const startGameMessage: StartGameMessageData = {
+                      startGame: true,
+                    };
+                    gameContext.room?.send(
+                      MessageTypes.startGame,
+                      startGameMessage,
+                    );
+                  }}
+                >
+                  Start Game
+                </Button>
               ) : (
                 <Body1>Waiting for game admin to start</Body1>
               )

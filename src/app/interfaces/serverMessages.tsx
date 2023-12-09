@@ -8,6 +8,10 @@ export interface PlayerReadyMessageData {
   playerReady: boolean;
 }
 
+export interface StartGameMessageData {
+  startGame: true;
+}
+
 export interface SetGameAdminMessageData {
   playerID: string;
 }
