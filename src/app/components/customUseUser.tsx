@@ -12,7 +12,7 @@ export default function customUseUser() {
   useEffect(() => {
     setIsLoading(false);
     setLocalUser({
-      email: "localuser@test.com",
+      email: `localuser.${localUserRandomizer}@test.com`,
       email_verified: null,
       name: `localuser ${localUserRandomizer}`,
       nickname: "localuser",
