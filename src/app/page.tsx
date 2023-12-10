@@ -78,7 +78,7 @@ export default function Home() {
                         contentBefore={<Keyboard24Filled />}
                         placeholder="Enter game code"
                         onChange={(_, val) => {
-                          setGameToJoinCode(val.value);
+                          setGameToJoinCode(val.value.toUpperCase);
                         }}
                       />
                     </div>
