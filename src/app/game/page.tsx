@@ -20,6 +20,7 @@ export default function CreateGame() {
   const router = useRouter();
   const { gameContext, setGameContext } = useContext(GameContext);
   const { dispatchToast } = useToastController("toaster");
+  const [loading] = useState(true);
 
   useEffect(() => {
     if (gameContext && gameContext.client && user) {
@@ -57,5 +58,7 @@ export default function CreateGame() {
   }, [gameContext?.client]);
 
   // return loading spinner here
-  return;
+   return loading ? (
+    <Spinner label="Loading..." size="huge" />
+  ) : null;
 }
