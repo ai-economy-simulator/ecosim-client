@@ -1,32 +1,21 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../page.module.css";
-import {
-  Button,
-  FluentProvider,
-  Image,
-  Tab,
-  TabList,
-  teamsLightTheme,
-} from "@fluentui/react-components";
+import { Button, Image, Tab, TabList } from "@fluentui/react-components";
 import {
   ArrowCircleLeft48Regular,
   ArrowCircleRight48Regular,
   Circle12Filled,
   Circle12Regular,
 } from "@fluentui/react-icons";
-import type {
-  SelectTabData,
-  SelectTabEvent,
-  TabValue,
-} from "@fluentui/react-components";
+import type { SelectTabData, SelectTabEvent } from "@fluentui/react-components";
 
 const Carousel = () => {
   const [imageCounter, setImageCounter] = useState(0);
   const imageArray = ["/cities_pixel.jpg", "/monopoly.jpeg", "/business.jpeg"];
   const [imageSrc, setImageSrc] = useState(imageArray[0]);
-  const [selectedValue, setSelectedValue] = useState<TabValue>(0);
+  const [selectedValue, setSelectedValue] = useState<number>(0);
 
   useEffect(() => {
     setImageSrc(imageArray[imageCounter]);
@@ -50,7 +39,7 @@ const Carousel = () => {
   };
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
-    setSelectedValue(data.value);
+    setSelectedValue(data.value as number);
   };
 
   const renderTabs = () => {
