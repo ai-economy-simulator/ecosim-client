@@ -1,36 +1,12 @@
 "use client";
 
-import styles from "../../page.module.css";
-import {
-  Avatar,
-  Body1,
-  Button,
-  Divider,
-  InfoLabel,
-  LargeTitle,
-  Persona,
-  Spinner,
-  Switch,
-  Text,
-  useToastController,
-} from "@fluentui/react-components";
+import { Spinner, useToastController } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
-import {
-  Copy24Regular,
-  AirplaneTakeOff24Filled,
-  AirplaneTakeOff24Regular,
-} from "@fluentui/react-icons";
 import CustomToaster from "@/app/components/toaster";
 import { useContext, useEffect, useMemo } from "react";
 import { GameContext } from "../gameContext";
 import { joinOrCreateGameRoom } from "@/app/services/game";
 import { Player, RestartRoomState } from "@/app/interfaces/gameRoomState";
-import { mapToArray } from "@/app/services/conversions";
-import {
-  MessageTypes,
-  PlayerReadyMessageData,
-  StartGameMessageData,
-} from "@/app/interfaces/serverMessages";
 import CustomUseUser from "@/app/components/customUseUser";
 import GameLobby from "@/app/components/gameLobby";
 
