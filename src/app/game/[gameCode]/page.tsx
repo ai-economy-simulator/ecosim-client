@@ -9,9 +9,10 @@ import { joinOrCreateGameRoom } from "@/app/services/game";
 import { Player, RestartRoomState } from "@/app/interfaces/gameRoomState";
 import CustomUseUser from "@/app/components/customUseUser";
 import GameLobby from "@/app/components/gameLobby";
+import Game from "@/app/components/game";
 
 // This component relies on an already created game client
-export default function Game({ params }: { params: { gameCode: string } }) {
+export default function GameRoom({ params }: { params: { gameCode: string } }) {
   const { user } = CustomUseUser();
   const router = useRouter();
   const { dispatchToast } = useToastController("toaster");
@@ -55,7 +56,7 @@ export default function Game({ params }: { params: { gameCode: string } }) {
     if (!gameContext.room.state.isGameStarted) {
       return <GameLobby gameCode={params.gameCode} gameContext={gameContext} />;
     } else {
-      return <Spinner />;
+      return <Game gameCode={params.gameCode} gameContext={gameContext} />;
     }
   }
 

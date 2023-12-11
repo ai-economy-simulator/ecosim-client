@@ -123,7 +123,7 @@ export default function GameLobby({
                     >
                       {mapToArray(
                         gameContext.room.state.players,
-                        (_: string, player: Player) => {
+                        (_: string, player: Player, idx: number) => {
                           return (
                             <div
                               className={styles.flexitemmargin}
@@ -136,6 +136,7 @@ export default function GameLobby({
                                   image: { src: player.avatar },
                                   title: player.playerName,
                                   size: 56,
+                                  color: "colorful",
                                 }}
                                 textPosition="below"
                                 size="medium"
