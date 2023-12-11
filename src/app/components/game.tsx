@@ -3,6 +3,11 @@ import { GameContextData } from "../interfaces/contexts";
 import { Player } from "../interfaces/gameRoomState";
 import styles from "../page.module.css";
 import { mapToArray } from "../services/conversions";
+import {
+  PLAYER_ARRANGEMENT_ELLIPSE_MAJOR,
+  PLAYER_ARRANGEMENT_ELLIPSE_MINOR,
+  PLAYER_AVATAR_SIZE,
+} from "../constants";
 
 export default function Game({
   gameCode,
@@ -30,13 +35,13 @@ export default function Game({
                         position: "absolute",
                         display: "inline",
                         left:
-                          -400 *
+                          -PLAYER_ARRANGEMENT_ELLIPSE_MAJOR *
                           Math.cos(
                             (2 * Math.PI * idx) /
                               gameContext.room?.state.players.size,
                           ),
                         top:
-                          -225 *
+                          -PLAYER_ARRANGEMENT_ELLIPSE_MINOR *
                           Math.sin(
                             (2 * Math.PI * idx) /
                               gameContext.room?.state.players.size,
@@ -48,7 +53,7 @@ export default function Game({
                           name: player.playerName,
                           image: { src: player.avatar },
                           title: player.playerName,
-                          size: 56,
+                          size: PLAYER_AVATAR_SIZE,
                           color: "colorful",
                         }}
                         textPosition="below"

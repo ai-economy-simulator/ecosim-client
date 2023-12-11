@@ -25,6 +25,7 @@ import {
 import { useContext, useMemo } from "react";
 import { GameContext } from "../game/gameContext";
 import { GameContextData } from "../interfaces/contexts";
+import { PLAYER_AVATAR_SIZE } from "../constants";
 
 export default function GameLobby({
   gameCode,
@@ -135,7 +136,7 @@ export default function GameLobby({
                                   name: player.playerName,
                                   image: { src: player.avatar },
                                   title: player.playerName,
-                                  size: 56,
+                                  size: PLAYER_AVATAR_SIZE,
                                   color: "colorful",
                                 }}
                                 textPosition="below"
