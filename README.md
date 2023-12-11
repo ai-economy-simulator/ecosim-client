@@ -4,6 +4,12 @@ Can we simulate macroeconomic factors using microeconomy of individual ventures?
 
 If AI is too smart now, can it do this?
 
+## Related Repositories:
+
+https://github.com/ai-economy-simulator/ecosim-server
+
+https://github.com/ai-economy-simulator/ecosim-ai
+
 ## Development Setup
 
 1. Fork and Clone the repository locally.
