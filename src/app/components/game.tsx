@@ -55,6 +55,11 @@ export default function Game({
                           title: player.playerName,
                           size: PLAYER_AVATAR_SIZE,
                           color: "colorful",
+                          activeAppearance: "ring-shadow",
+                          active:
+                            gameContext.room.state.activePlayer === playerID
+                              ? "active"
+                              : "inactive",
                         }}
                         textPosition="below"
                         size="medium"
