@@ -1,36 +1,23 @@
 import { Schema, Context, MapSchema, type } from "@colyseus/schema";
 
+export class PlayerPrivate extends Schema {
+  email: string | undefined = undefined;
+}
+
 export class Player extends Schema {
-  playerName: string | undefined;
-  avatar: string | undefined;
+  playerName: string | undefined = undefined;
+  avatar: string | undefined = undefined;
   isReady: boolean = false;
-  playerID: string;
+  playerID: string | null = null;
 
-  // make email private. Can we remove this from here?
-  email: string | undefined;
-
-  constructor({
-    playerName,
-    avatar,
-    email,
-    playerID,
-  }: {
-    playerName: string | undefined;
-    avatar: string | undefined;
-    email: string | undefined;
-    playerID: string;
-  }) {
-    super();
-    this.playerName = playerName;
-    this.avatar = avatar;
-    this.email = email;
-    this.playerID = playerID;
-  }
+  private: PlayerPrivate | undefined = undefined;
 }
 
 export class RestartRoomState extends Schema {
   // World states
   stockPrice: number = 100;
+
+  // Game Environment States
   activePlayer: string | null = null;
   isGameStarted: boolean = false;
   gameAdmin: string | null = null;

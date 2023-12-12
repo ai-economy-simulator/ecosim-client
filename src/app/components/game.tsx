@@ -63,6 +63,11 @@ export default function Game({
                         }}
                         textPosition="below"
                         size="medium"
+                        primaryText={
+                          gameContext.room.sessionId === playerID
+                            ? "You"
+                            : player.playerName
+                        }
                       />
                     </div>
                   );
