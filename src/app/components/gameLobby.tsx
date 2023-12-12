@@ -9,7 +9,6 @@ import {
   useToastController,
 } from "@fluentui/react-components";
 import styles from "../page.module.css";
-import CustomToaster from "./toaster";
 import { mapToArray } from "../services/conversions";
 import { Player } from "../interfaces/gameRoomState";
 import {
@@ -26,6 +25,7 @@ import { useContext, useMemo } from "react";
 import { GameContext } from "../game/gameContext";
 import { GameContextData } from "../interfaces/contexts";
 import { PLAYER_AVATAR_SIZE } from "../constants";
+import { toast } from "../services/toast";
 
 export default function GameLobby({
   gameCode,
@@ -88,9 +88,10 @@ export default function GameLobby({
                                 `I'm inviting you to join my Restart. game! Use the code ${gameCode} or link ${window.location.href} to join.`,
                               )
                               .then(() => {
-                                dispatchToast(
-                                  <CustomToaster text="Copied to clipboard" />,
-                                  { intent: "success" },
+                                toast(
+                                  dispatchToast,
+                                  "Copied to clipboard",
+                                  "success",
                                 );
                               })
                               .catch((err) => {

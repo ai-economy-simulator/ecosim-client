@@ -2,7 +2,6 @@
 
 import { Spinner, useToastController } from "@fluentui/react-components";
 import { useRouter } from "next/navigation";
-import CustomToaster from "@/app/components/toaster";
 import { useContext, useEffect, useMemo } from "react";
 import { GameContext } from "../gameContext";
 import { joinOrCreateGameRoom } from "@/app/services/game";
@@ -10,6 +9,7 @@ import { Player, RestartRoomState } from "@/app/interfaces/gameRoomState";
 import CustomUseUser from "@/app/components/customUseUser";
 import GameLobby from "@/app/components/gameLobby";
 import Game from "@/app/components/game";
+import { toast } from "@/app/services/toast";
 
 // This component relies on an already created game client
 export default function GameRoom({ params }: { params: { gameCode: string } }) {
@@ -38,14 +38,25 @@ export default function GameRoom({ params }: { params: { gameCode: string } }) {
                 return { ...prev };
               });
             });
+
+            room.onLeave((code) => {
+              console.error("Client left the room. Error: ", code);
+              toast(
+                dispatchToast,
+                `Unable to connect to server. Error: ${code}.`,
+                "error",
+                -1,
+              );
+            });
           })
           .catch((err) => {
             // How to get room capacity is full or room does not exist? Check if valid game code when someone directly comes on this URL
             // how to use Next.js errors
             console.error("Unable to connect to server. ", err);
-            dispatchToast(
-              <CustomToaster text="Unable to connect to server. Please try again later." />,
-              { intent: "error" },
+            toast(
+              dispatchToast,
+              "Unable to connect to server. Please try again later.",
+              "error",
             );
           });
       }

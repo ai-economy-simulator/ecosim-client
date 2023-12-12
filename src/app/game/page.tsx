@@ -5,7 +5,6 @@ import { fetcher } from "../services/fetcher";
 import { useContext, useEffect, useState } from "react";
 import { Spinner, useToastController } from "@fluentui/react-components";
 import { GameContext } from "./gameContext";
-import CustomToaster from "../components/toaster";
 import { joinOrCreateGameRoom } from "../services/game";
 import { RestartRoomState } from "../interfaces/gameRoomState";
 import {
@@ -13,6 +12,7 @@ import {
   SetGameAdminMessageData,
 } from "../interfaces/serverMessages";
 import CustomUseUser from "../components/customUseUser";
+import { toast } from "../services/toast";
 
 // This component relies on an already created game client and creates a new room for user landing on route /game
 export default function CreateGame() {
@@ -47,9 +47,10 @@ export default function CreateGame() {
         .catch((err) => {
           // how to use Next.js errors
           console.error("Unable to connect to server. ", err);
-          dispatchToast(
-            <CustomToaster text="Unable to connect to server. Please try again later." />,
-            { intent: "error" },
+          toast(
+            dispatchToast,
+            "Unable to connect to server. Please try again later.",
+            "error",
           );
         });
     }
