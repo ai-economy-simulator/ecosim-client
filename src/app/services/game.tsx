@@ -9,11 +9,21 @@ const joinOrCreateGameRoom = async (
   user: UserProfile,
   gameCode: string | undefined,
 ) => {
+  // Replace this with swr request or not? Refer swr vercel docs
+  const res = await fetch("/api/protected/access");
+  if (!res.ok) {
+    console.error("Unable to get access token.");
+    // throw error here
+  }
+  const { accessToken }: { accessToken: string } = await res.json();
+
   const gameJoinOptions = {
     playerName: user.name,
     email: user.email,
     avatar: user.picture,
+    accessToken: accessToken,
   };
+
   if (gameCode) {
     return client.joinById<RestartRoomState>(gameCode, gameJoinOptions);
   }
