@@ -51,6 +51,7 @@ export default function CreateGame() {
             dispatchToast,
             "Unable to connect to server. Please try again later.",
             "error",
+            -1,
           );
         });
     }

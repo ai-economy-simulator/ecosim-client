@@ -1,4 +1,9 @@
-import { Persona } from "@fluentui/react-components";
+import {
+  Button,
+  Persona,
+  Subtitle2Stronger,
+  Text,
+} from "@fluentui/react-components";
 import { GameContextData } from "../interfaces/contexts";
 import { Player } from "../interfaces/gameRoomState";
 import styles from "../page.module.css";
@@ -8,6 +13,7 @@ import {
   PLAYER_ARRANGEMENT_ELLIPSE_MINOR,
   PLAYER_AVATAR_SIZE,
 } from "../constants";
+import { EndTurnMessageData, MessageTypes } from "../interfaces/serverMessages";
 
 export default function Game({
   gameCode,
@@ -20,8 +26,15 @@ export default function Game({
     <>
       <div
         className={styles.flexcontainer}
-        style={{ justifyContent: "center" }}
+        style={{
+          justifyContent: "space-between",
+          flexFlow: "column wrap",
+          height: "85vh",
+        }}
       >
+        <div className={styles.flexitemmargin}>
+          <div>Header</div>
+        </div>
         <div className={styles.flexitemmargin} style={{ position: "relative" }}>
           {gameContext.room &&
             mapToArray(
@@ -64,9 +77,11 @@ export default function Game({
                         textPosition="below"
                         size="medium"
                         primaryText={
-                          gameContext.room.sessionId === playerID
-                            ? "You"
-                            : player.playerName
+                          gameContext.room.sessionId === playerID ? (
+                            <Subtitle2Stronger>You</Subtitle2Stronger>
+                          ) : (
+                            player.playerName
+                          )
                         }
                       />
                     </div>
@@ -74,6 +89,25 @@ export default function Game({
                 }
               },
             )}
+        </div>
+        <div className={styles.flexitemmargin}>
+          {gameContext.room?.sessionId ===
+          gameContext.room?.state.activePlayer ? (
+            <Button
+              onClick={() => {
+                const endTurnMessage: EndTurnMessageData = {
+                  endTurn: true,
+                };
+                gameContext.room?.send(MessageTypes.endTurn, endTurnMessage);
+              }}
+            >
+              End Turn
+            </Button>
+          ) : (
+            <>
+              <Text>.</Text>
+            </>
+          )}
         </div>
       </div>
     </>

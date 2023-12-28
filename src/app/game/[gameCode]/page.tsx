@@ -57,6 +57,7 @@ export default function GameRoom({ params }: { params: { gameCode: string } }) {
               dispatchToast,
               "Unable to connect to server. Please try again later.",
               "error",
+              -1,
             );
           });
       }
