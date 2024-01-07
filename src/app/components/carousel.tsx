@@ -73,10 +73,7 @@ const Carousel = () => {
               size="large"
             ></Button>
           </div>
-          <div
-            className={styles.flexcontainer}
-            style={{ flexDirection: "column", margin: "20px" }}
-          >
+          <div className={styles.CarouselImgContainer}>
             <div style={{ height: "280px", width: "280px" }}>
               <Image src={imageSrc} fit="cover" shape="circular" />
             </div>
