@@ -9,3 +9,13 @@
   margin-top: 4px;
   margin-bottom: 4px;
 }
+
+.CarouselImgContainer {
+  flex-direction: column;
+  margin: 20px;
+}
+@media (max-width: 640px) {
+  .CarouselImgContainer {
+    margin: 10px;
+  }
+}
