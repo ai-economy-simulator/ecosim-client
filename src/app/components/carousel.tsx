@@ -73,9 +73,19 @@ const Carousel = () => {
               size="large"
             ></Button>
           </div>
-          <div className={styles.CarouselImgContainer}>
+          <div
+            className={{
+              ...styles.flexcontainer,
+              ...styles.CarouselImgContainer,
+            }}
+          >
             <div style={{ height: "280px", width: "280px" }}>
-              <Image src={imageSrc} fit="cover" shape="circular" />
+              <Image
+                src={imageSrc}
+                fit="cover"
+                shape="circular"
+                alt={imageSrc}
+              />
             </div>
           </div>
           <div>

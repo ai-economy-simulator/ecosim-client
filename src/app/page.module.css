@@ -11,12 +11,10 @@
 }
 
 .CarouselImgContainer {
-  display: flex;
-  align-items: center;
   flex-direction: column;
   margin: 20px;
 }
-@media (max-width: 390px) {
+@media (max-width: 640px) {
   .CarouselImgContainer {
     margin: 10px;
   }
