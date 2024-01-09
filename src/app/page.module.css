@@ -1,3 +1,13 @@
+.page-container {
+  margin: 4px;
+}
+
+@media screen and (max-width: 639px) {
+  .page-container {
+    margin: 12px;
+  }
+}
+
 .flexcontainer {
   display: flex;
   align-items: center;
