@@ -17,15 +17,24 @@ import {
   LargeTitle,
   teamsLightTheme,
 } from "@fluentui/react-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { Carousel } from "./components/carousel";
 
 export default function Home() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const [gameToJoinCode, setGameToJoinCode] = useState("");
   const router = useRouter();
 
+  if (!isMounted) {
+    return;
+  }
   return (
     <>
       <FluentProvider theme={teamsLightTheme}>

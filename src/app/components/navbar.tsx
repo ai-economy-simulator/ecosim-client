@@ -20,10 +20,19 @@ import {
   teamsLightTheme,
 } from "@fluentui/react-components";
 import CustomUseUser from "./customUseUser";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, error } = CustomUseUser();
+  const [isMounted, setIsMounted] = useState(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return;
+  }
   return (
     <>
       <FluentProvider theme={teamsLightTheme}>
