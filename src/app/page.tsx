@@ -39,79 +39,81 @@ export default function Home() {
     <>
       <FluentProvider theme={teamsLightTheme}>
         <main>
-          <div
-            className={styles.flexcontainer}
-            style={{
-              flexFlow: "row wrap-reverse",
-              justifyContent: "space-around",
-              width: "100%",
-            }}
-          >
-            <div className={styles.flexitemmargin}>
-              <div
-                className={styles.flexcontainer}
-                style={{ flexDirection: "column", alignItems: "start" }}
-              >
-                <div className={styles.flexitemmargin}>
-                  <LargeTitle>
-                    Is it easy <br />
-                    building a business?
-                  </LargeTitle>
-                </div>
-                <div className={styles.flexitemmargin}>
-                  <div
-                    className={styles.flexcontainer}
-                    style={{ flexFlow: "row wrap" }}
-                  >
-                    <div className={styles.flexitemmargin}>
-                      <NextLink href="/game">
-                        <Button
-                          appearance="primary"
-                          size="large"
-                          icon={<BrainCircuit24Filled />}
-                        >
-                          New Game
-                        </Button>
-                      </NextLink>
-                    </div>
+          <div className="page-container">
+            <div
+              className={styles.flexcontainer}
+              style={{
+                flexFlow: "row wrap-reverse",
+                justifyContent: "space-around",
+                width: "100%",
+              }}
+            >
+              <div className={styles.flexitemmargin}>
+                <div
+                  className={styles.flexcontainer}
+                  style={{ flexDirection: "column", alignItems: "start" }}
+                >
+                  <div className={styles.flexitemmargin}>
+                    <LargeTitle>
+                      Is it easy <br />
+                      building a business?
+                    </LargeTitle>
+                  </div>
+                  <div className={styles.flexitemmargin}>
                     <div
-                      className={styles.flexitemmargin}
-                      style={{ margin: "0px 12px" }}
+                      className={styles.flexcontainer}
+                      style={{ flexFlow: "row wrap" }}
                     >
-                      <Body2>or</Body2>
-                    </div>
-                    <div className={styles.flexitemmargin}>
-                      <Input
-                        value={gameToJoinCode}
-                        size="large"
-                        contentBefore={<Keyboard24Filled />}
-                        placeholder="Enter game code"
-                        onChange={(_, val) => {
-                          setGameToJoinCode(val.value);
-                        }}
-                      />
-                    </div>
-                    <div className={styles.flexitemmargin}>
-                      <Button
-                        appearance="subtle"
-                        size="large"
-                        disabled={gameToJoinCode === "" ? true : false}
-                        onClick={() => {
-                          router.push(`/game/${gameToJoinCode}`);
-                        }}
+                      <div className={styles.flexitemmargin}>
+                        <NextLink href="/game">
+                          <Button
+                            appearance="primary"
+                            size="large"
+                            icon={<BrainCircuit24Filled />}
+                          >
+                            New Game
+                          </Button>
+                        </NextLink>
+                      </div>
+                      <div
+                        className={styles.flexitemmargin}
+                        style={{ margin: "0px 12px" }}
                       >
-                        Join
-                      </Button>
+                        <Body2>or</Body2>
+                      </div>
+                      <div className={styles.flexitemmargin}>
+                        <Input
+                          value={gameToJoinCode}
+                          size="large"
+                          contentBefore={<Keyboard24Filled />}
+                          placeholder="Enter game code"
+                          onChange={(_, val) => {
+                            setGameToJoinCode(val.value);
+                          }}
+                        />
+                      </div>
+                      <div className={styles.flexitemmargin}>
+                        <Button
+                          appearance="subtle"
+                          size="large"
+                          disabled={gameToJoinCode === "" ? true : false}
+                          onClick={() => {
+                            router.push(`/game/${gameToJoinCode}`);
+                          }}
+                        >
+                          Join
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              className={styles.flexitemmargin}
-              style={{ height: "25rem", width: "25rem" }}
-            >
-              <Carousel />
+              <div
+                className={styles.flexitemmargin}
+                style={{ height: "25rem", width: "25rem" }}
+              >
+                <Carousel />
+              </div>
             </div>
           </div>
         </main>
